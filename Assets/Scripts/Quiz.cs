@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class Quiz : MonoBehaviour
 {
     [Header("Questions")]
-    [SerializeField] TextMeshProUGUI questiontext;
+    [SerializeField] TextMeshProUGUI questionText;
     [SerializeField] QuestionSO question;
 
     [Header("Answers")]
     [SerializeField] GameObject[] answerButtons;
     int correctAnswerIndex;
+    bool hasAnsweredEarly;
 
     [Header("Button Colors")]
     [SerializeField] Sprite defaultAnswerSprite;
@@ -26,22 +27,43 @@ public class Quiz : MonoBehaviour
     void Start()
     {
         timer = FindObjectOfType<Timer>();
-        //DisplayQuestion();
         GetNextQuestion();
+        //DisplayQuestion();
     }
 
     void Update()
+    {
+        timerImage.fillAmount = timer.fillFraction;
+        if(timer.loadNextQuestion)
+        {
+            hasAnsweredEarly = false;
+            GetNextQuestion();
+            timer.loadNextQuestion = false;
+        }
+        else if(!hasAnsweredEarly && !timer.isAnsweringQuestion)
+        {
+            DisplayAnswer(-1);
+            SetButtonState(false);
+        }
+    }
     
-        
     
 
     public void OnAnswerSelected(int index)
     {
+        hasAnsweredEarly = true;
+        DisplayAnswer(index);
+        SetButtonState(false);
+        timer.Canceltimer();
+    }
+
+     void DisplayAnswer(int index)
+     {
         Image buttonImage;
 
         if(index == question.GetCorrectAnswerIndex())
         {
-            questiontext.text = "Correct!";
+            questionText.text = "Correct!";
             buttonImage = answerButtons[index].GetComponent<Image>();
             buttonImage.sprite = correctAnswerSprite;
         }
@@ -49,12 +71,12 @@ public class Quiz : MonoBehaviour
         {  
            correctAnswerIndex = question.GetCorrectAnswerIndex();
            string correctAnswer = question.GetAnswer(correctAnswerIndex);
-           questiontext.text = "You're wrong the correct answer is;\n" + correctAnswer;
+           questionText.text = "You're wrong the correct answer is;\n" + correctAnswer;
            buttonImage = answerButtons[correctAnswerIndex].GetComponent<Image>();
            buttonImage.sprite = correctAnswerSprite;
         }
-        SetButtonState(false);
-    }
+     }
+
 
     void GetNextQuestion()
     {
@@ -65,7 +87,7 @@ public class Quiz : MonoBehaviour
 
     void DisplayQuestion()
     {
-       questiontext.text = question.GetQuestion();
+       questionText.text = question.GetQuestion();
 
         for(int i = 0; i < answerButtons.Length; i++)
         {
