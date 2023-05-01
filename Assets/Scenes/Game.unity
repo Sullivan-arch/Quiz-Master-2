@@ -2021,10 +2021,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64498f95c3bb7f498189139534ad05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerToCompleteQuestion: 5
-  timeToShowCorrectAnswer: 10
+  timerToCompleteQuestion: 15
+  timeToShowCorrectAnswer: 5
   loadNextQuestion: 0
-  isAnsweringQuestion: 1
+  isAnsweringQuestion: 0
   fillFraction: 0
 --- !u!1 &2051555106
 GameObject:

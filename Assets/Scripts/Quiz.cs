@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Quiz : MonoBehaviour
 {
     [Header("Questions")]
-    [SerializeField] TextMeshProUGUI questionText;
+    [SerializeField] TextMeshProUGUI questiontext;
     [SerializeField] QuestionSO question;
 
     [Header("Answers")]
@@ -42,7 +42,7 @@ public class Quiz : MonoBehaviour
         }
         else if(!hasAnsweredEarly && !timer.isAnsweringQuestion)
         {
-            DisplayAnswer(-1);
+            DisplayAnswer(-10);
             SetButtonState(false);
         }
     }
@@ -54,7 +54,7 @@ public class Quiz : MonoBehaviour
         hasAnsweredEarly = true;
         DisplayAnswer(index);
         SetButtonState(false);
-        timer.Canceltimer();
+        timer.CancelTimer();
     }
 
      void DisplayAnswer(int index)
@@ -63,7 +63,7 @@ public class Quiz : MonoBehaviour
 
         if(index == question.GetCorrectAnswerIndex())
         {
-            questionText.text = "Correct!";
+            questiontext.text = "Correct!";
             buttonImage = answerButtons[index].GetComponent<Image>();
             buttonImage.sprite = correctAnswerSprite;
         }
@@ -71,7 +71,7 @@ public class Quiz : MonoBehaviour
         {  
            correctAnswerIndex = question.GetCorrectAnswerIndex();
            string correctAnswer = question.GetAnswer(correctAnswerIndex);
-           questionText.text = "You're wrong the correct answer is;\n" + correctAnswer;
+           questiontext.text = "You're wrong the correct answer is;\n" + correctAnswer;
            buttonImage = answerButtons[correctAnswerIndex].GetComponent<Image>();
            buttonImage.sprite = correctAnswerSprite;
         }
@@ -87,7 +87,7 @@ public class Quiz : MonoBehaviour
 
     void DisplayQuestion()
     {
-       questionText.text = question.GetQuestion();
+       questiontext.text = question.GetQuestion();
 
         for(int i = 0; i < answerButtons.Length; i++)
         {
