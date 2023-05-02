@@ -28,7 +28,7 @@ public class Quiz : MonoBehaviour
     {
         timer = FindObjectOfType<Timer>();
         GetNextQuestion();
-        //DisplayQuestion();
+        DisplayQuestion();
     }
 
     void Update()
@@ -42,7 +42,7 @@ public class Quiz : MonoBehaviour
         }
         else if(!hasAnsweredEarly && !timer.isAnsweringQuestion)
         {
-            DisplayAnswer(-10);
+            DisplayQuestion();
             SetButtonState(false);
         }
     }
@@ -106,12 +106,13 @@ public class Quiz : MonoBehaviour
 
     }
 
-    void SetDefaultButtonSprites()
+   void SetDefaultButtonSprites()
     {
-        for(int i = 0; i < answerButtons.Length; i++)
-        {
-            Image buttonImage = answerButtons[i].GetComponent<Image>();
-            buttonImage.sprite = defaultAnswerSprite;
-        }
+       for(int i = 0; i < answerButtons.Length; i++)
+    {
+           Image buttonImage = answerButtons[i].GetComponent<Image>();
+          buttonImage.sprite = defaultAnswerSprite;
+    }
+
     }
 }
