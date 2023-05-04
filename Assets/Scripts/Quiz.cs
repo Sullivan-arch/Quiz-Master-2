@@ -27,8 +27,6 @@ public class Quiz : MonoBehaviour
     void Start()
     {
         timer = FindObjectOfType<Timer>();
-        GetNextQuestion();
-        //DisplayQuestion();
     }
 
     void Update()
@@ -42,13 +40,14 @@ public class Quiz : MonoBehaviour
         }
         else if(!hasAnsweredEarly && !timer.isAnsweringQuestion)
         {
-            DisplayAnswer(-10);
+            DisplayAnswer(-1);
             SetButtonState(false);
         }
     }
 
     public void OnAnswerSelected(int index)
     {
+        
         hasAnsweredEarly = true;
         DisplayAnswer(index);
         SetButtonState(false);
@@ -77,10 +76,13 @@ public class Quiz : MonoBehaviour
 
     void GetNextQuestion()
     {
-        SetButtonState(true);
-        SetDefaultButtonSprites();
-        GetRandomQuestion();
-        DisplayQuestion();
+      if(questions.Count > 0)
+      {
+            SetButtonState(true);
+            SetDefaultButtonSprites();
+            GetRandomQuestion();
+            DisplayQuestion();
+      }
     }
     
     void GetRandomQuestion()
