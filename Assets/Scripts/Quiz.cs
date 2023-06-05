@@ -54,11 +54,33 @@ public class Quiz : MonoBehaviour
         timer.CancelTimer();
     }
 
+    void GetNextQuestion()
+    {
+         if(questions.Count > 0)
+      {
+            SetButtonState(true);
+            SetDefaultButtonSprites();
+            GetRandomQuestion();
+            DisplayQuestion();
+      }
+    }
+    
+    void GetRandomQuestion()
+    {
+        int index = Random.Range(0, questions.Count);
+        currentQuestion = questions[index];
+
+        if (questions.Contains(currentQuestion));
+        {
+            questions.Remove(currentQuestion);
+        }
+
+    }
      void DisplayAnswer(int index)
      {
         Image buttonImage;
 
-        if(index == currentQuestion.GetCorrectAnswerIndex())
+        if (index == currentQuestion.GetCorrectAnswerIndex())
         {
             questiontext.text = "Correct!";
             buttonImage = answerButtons[index].GetComponent<Image>();
@@ -73,28 +95,6 @@ public class Quiz : MonoBehaviour
            buttonImage.sprite = correctAnswerSprite;
         }
      }
-
-    void GetNextQuestion()
-    {
-      if(questions.Count > 0)
-      {
-            SetButtonState(true);
-            SetDefaultButtonSprites();
-            GetRandomQuestion();
-            DisplayQuestion();
-      }
-    }
-    
-    void GetRandomQuestion()
-    {
-        int index = Random.Range(0, questions.Count);
-        currentQuestion = questions[index];
-
-        if(questions.Contains(currentQuestion))
-        {
-            questions.Remove(currentQuestion);
-        }
-    }
 
     void DisplayQuestion()
     {
